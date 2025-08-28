@@ -1,7 +1,10 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
+
+
 </script>
 
 <template>
-  <div>Еще</div>
+<p>...</p>
+
 </template>

@@ -4,10 +4,8 @@ import cors from "cors";
 const app = express();
 const port = 5000;
 
-// Разрешаем запросы с фронтенда
 app.use(cors());
 
-// Простое API
 app.get("/api/products", (req, res) => {
   res.json([
     {
@@ -37,7 +35,6 @@ app.get("/api/products", (req, res) => {
       stock: 20,
       rating: 4.7,
     },
-    // новые продукты
     {
       name: "Logitech MX Master 3",
       color: "Черный",
@@ -65,6 +62,42 @@ app.get("/api/products", (req, res) => {
       stock: 12,
       rating: 4.4,
     },
+    {
+      name: "HP Spectre x360",
+      color: "Темно-серый",
+      category: "Ноутбук",
+      price: "$1899",
+      brand: "HP",
+      stock: 7,
+      rating: 4.5,
+    },
+    {
+      name: "Apple iPad Air",
+      color: "Розовый",
+      category: "Планшет",
+      price: "$599",
+      brand: "Apple",
+      stock: 18,
+      rating: 4.7,
+    },
+    {
+      name: "Samsung Galaxy Buds Pro",
+      color: "Черный",
+      category: "Аксессуары",
+      price: "$199",
+      brand: "Samsung",
+      stock: 25,
+      rating: 4.6,
+    },
+    {
+      name: "Asus ROG Zephyrus G14",
+      color: "Белый",
+      category: "Ноутбук",
+      price: "$1499",
+      brand: "Asus",
+      stock: 6,
+      rating: 4.8,
+    }
   ]);
 });
 

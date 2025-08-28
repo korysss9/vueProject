@@ -16,8 +16,8 @@ const toggleMenu = () => {
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
     >
-      <a
-        href="https://flowbite.com/"
+      <router-link
+        to="/table"
         class="flex items-center space-x-3 rtl:space-x-reverse"
       >
         <img :src="Logo" class="h-8" alt="Vue Logo" />
@@ -25,7 +25,7 @@ const toggleMenu = () => {
           class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
           >Vue.js</span
         >
-      </a>
+      </router-link>
 
       <!-- кнопка мобильного меню -->
       <div class="flex md:hidden">
@@ -98,7 +98,3 @@ const toggleMenu = () => {
     </div>
   </nav>
 </template>
-
-<style scoped>
-/* блок mobile-menu скрыт по умолчанию, показывается только на мобильных через v-show */
-</style>
