@@ -37,7 +37,7 @@ const toggleMenu = () => {
           :aria-expanded="isOpen.toString()"
         >
           <span class="sr-only">Open main menu</span>
-           <span v-html="!isOpen ? BurgerIcon : CloseIcon"></span>
+          <span v-html="!isOpen ? BurgerIcon : CloseIcon"></span>
         </button>
       </div>
 

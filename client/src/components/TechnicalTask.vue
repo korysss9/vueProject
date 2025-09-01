@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from "vue";
 import { getProducts } from "../services/products.js";
 import Modal from "../components/Modal.vue";
 import ProductModalContent from "./ProductModalContent.vue";
-
+import { toast } from "vue-sonner";
 const products = ref([]);
 const isOpen = ref(false);
 const productValue = ref({
@@ -40,7 +40,8 @@ const closeModal = () => {
 };
 
 const confirmUpdate = () => {
-  console.log("Обновляем продукт:", productValue.value);
+  toast.success("Продукт успешно обновлён!");
+
   isOpen.value = false;
 };
 
