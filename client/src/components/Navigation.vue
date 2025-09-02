@@ -13,16 +13,13 @@ const toggleMenu = () => {
   <nav
     class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600"
   >
-    <div
-      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-    >
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <router-link
-        to="/table"
+        to="/user-table"
         class="flex items-center space-x-3 rtl:space-x-reverse"
       >
         <img :src="Logo" class="h-8" alt="Vue Logo" />
-        <span
-          class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
           >Vue.js</span
         >
       </router-link>
@@ -46,12 +43,21 @@ const toggleMenu = () => {
         <ul class="flex space-x-8">
           <li>
             <router-link
-              to="/table"
+              to="/user-table"
               class="block py-2 px-3 text-gray-900 rounded-sm dark:text-white"
               active-class="text-blue-700 dark:text-blue-500"
               exact-active-class="text-blue-700 dark:text-blue-500"
             >
-              Таблица
+              Пользователи
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              to="/add-user"
+              class="block py-2 px-3 text-gray-900 rounded-sm hover:text-blue-700 dark:text-white dark:hover:text-blue-500"
+              active-class="text-blue-700 dark:text-blue-500"
+            >
+              Добавить
             </router-link>
           </li>
           <li>
@@ -80,7 +86,18 @@ const toggleMenu = () => {
               exact-active-class="text-blue-700 dark:text-blue-500"
               @click="toggleMenu"
             >
-              Таблица
+              Пользователи
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              to="/add-user"
+              class="block py-2 px-3 text-gray-900 rounded-sm dark:text-white"
+              active-class="text-blue-700 dark:text-blue-500"
+              exact-active-class="text-blue-700 dark:text-blue-500"
+              @click="toggleMenu"
+            >
+              Добавить
             </router-link>
           </li>
           <li>
