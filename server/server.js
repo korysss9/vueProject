@@ -6,7 +6,7 @@ const port = 5000;
 
 app.use(cors());
 
-app.get("/api/products", async (req, res) => {
+app.get("/api/users", async (req, res) => {
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
     const users = await response.json();

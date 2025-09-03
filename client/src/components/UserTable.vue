@@ -1,67 +1,43 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import { getProducts } from "../services/products.js";
-import Modal from "../components/Modal.vue";
-import ProductModalContent from "./ProductModalContent.vue";
-import { toast } from "vue-sonner";
 import { useRouter } from "vue-router";
 
+const props = defineProps({
+  users: { type: Array, default: () => [] },
+  searchTerm: { type: String, default: "" },
+});
+
+const emit = defineEmits(["update:searchTerm"]);
+
 const router = useRouter();
-const users = ref([]);
-const isOpen = ref(false);
-const productValue = ref({
-  pName: "",
-  pPrice: "",
-  pBrand: "",
-  pColor: "",
-});
-const originalValue = ref({});
-const searchTerm = ref("");
-
-onMounted(async () => {
-  try {
-    const response = await getProducts();
-    users.value = response.data;
-  } catch (error) {
-    console.error("Ошибка загрузки продуктов:", error);
-  }
-});
-
-const openModal = (product) => {
-  const { name, price, brand, color } = product;
-  productValue.value = {
-    pName: name,
-    pPrice: price,
-    pBrand: brand,
-    pColor: color,
-  };
-  originalValue.value = { ...productValue.value };
-  isOpen.value = true;
-};
-
-const closeModal = () => {
-  isOpen.value = false;
-};
-
-const confirmUpdate = () => {
-  toast.success("Продукт успешно обновлён!");
-  isOpen.value = false;
-};
-
-const isDisabled = computed(() => {
-  return JSON.stringify(productValue.value) === JSON.stringify(originalValue.value);
-});
-
-const filteredProducts = computed(() => {
-  const term = searchTerm.value.toLowerCase().replace(/\s+/g, "");
-  return users.value.filter((product) =>
-    product.name.toLowerCase().replace(/\s+/g, "").includes(term)
-  );
-});
 
 const goToUserDetail = (id) => {
   router.push({ name: "UserDetail", params: { id } });
 };
+
+// const openModal = (product) => {
+//   const { name, price, brand, color } = product;
+//   productValue.value = {
+//     pName: name,
+//     pPrice: price,
+//     pBrand: brand,
+//     pColor: color,
+//   };
+//   originalValue.value = { ...productValue.value };
+//   isOpen.value = true;
+// };
+
+// const closeModal = () => {
+//   isOpen.value = false;
+// };
+
+// const confirmUpdate = () => {
+//   toast.success("Продукт успешно обновлён!");
+//   isOpen.value = false;
+// };
+
+// const isDisabled = computed(() => {
+//   return JSON.stringify(productValue.value) === JSON.stringify(originalValue.value);
+// });
 </script>
 
 <template>
@@ -98,7 +74,8 @@ const goToUserDetail = (id) => {
           <input
             type="search"
             id="default-search"
-            v-model="searchTerm"
+            :value="searchTerm"
+            @input="emit('update:searchTerm', $event.target.value)"
             class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Поиск по имени..."
           />
@@ -107,14 +84,21 @@ const goToUserDetail = (id) => {
     </div>
 
     <!-- Таблица -->
-    <div class="relative overflow-x-auto shadow-lg sm:rounded-lg bg-white">
-      <table class="w-full max-w-full min-w-[827px] text-sm text-left text-gray-700">
+    <div
+      class="relative overflow-y-auto overflow-x-hidden shadow-lg sm:rounded-lg bg-white h-full scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 "
+      style="max-height: calc(100vh - 221px)"
+    >
+      <table
+        class="w-full max-w-full min-w-[827px] text-sm text-left text-gray-700"
+      >
         <caption
           class="p-5 text-lg font-semibold text-left text-gray-900 bg-gray-100 rounded-t-lg"
         >
-          <p class="mt-1 text-sm font-normal text-gray-500">Список пользователей</p>
+          <p class="mt-1 text-sm font-normal text-gray-500">
+            Список пользователей
+          </p>
         </caption>
-        <thead class="text-xs uppercase bg-gray-200 text-gray-700">
+        <thead class="text-xs uppercase bg-gray-200 text-gray-700 sticky top-0">
           <tr>
             <th class="px-6 py-3">№</th>
             <th class="px-6 py-3">Имя</th>
@@ -125,24 +109,23 @@ const goToUserDetail = (id) => {
         </thead>
         <tbody>
           <tr
-            v-for="(product, index) in filteredProducts"
-            :key="index"
+            v-for="(user, index) in users"
+            :key="user.id || index"
             class="border-b border-gray-200 hover:bg-gray-100 transition-all duration-200"
           >
             <td class="px-6 py-4">{{ index + 1 }}</td>
             <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-              {{ product.name }}
+              {{ user.name }}
             </th>
-            <td class="px-6 py-4">{{ product.email }}</td>
-            <td class="px-6 py-4">{{ product.phone }}</td>
+            <td class="px-6 py-4">{{ user.email }}</td>
+            <td class="px-6 py-4">{{ user.phone }}</td>
             <td class="px-6 py-4 text-right">
               <a
-                @click.prevent="goToUserDetail(product.id)"
+                @click.prevent="goToUserDetail(user.id)"
                 href="#"
                 class="font-medium text-blue-600 hover:text-blue-500 hover:underline flex items-center gap-2"
               >
                 <p>Подробнее</p>
-
                 <svg
                   class="w-3 h-3 text-blue-600"
                   aria-hidden="true"

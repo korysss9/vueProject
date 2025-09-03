@@ -7,4 +7,4 @@ const api = axios.create({
   },
 });
 
-export const getProducts = () => api.get("/products");
+export const getUsers = () => api.get("/users");

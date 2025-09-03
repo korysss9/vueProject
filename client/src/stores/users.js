@@ -1,16 +1,28 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { getUsers } from "../services/users.js";
 
 export const useUsersStore = defineStore("users", () => {
-  const users = ref([
-    { id: 1, name: "Leanne Graham", email: "Sincere@april.biz", phone: "1-770-736-8031" },
-    { id: 2, name: "Ervin Howell", email: "Shanna@melissa.tv", phone: "010-692-6593" }
-  ]);
+  const users = ref([]);          
+  const serverUsers = ref([]);    
+
+  const fetchUsers = async () => {
+    if (serverUsers.value.length) return;
+    try {
+      const response = await getUsers();
+      serverUsers.value = response.data;
+      users.value = [...serverUsers.value];
+    } catch (err) {
+      console.error("Ошибка загрузки пользователей:", err);
+    }
+  };
 
   const addUser = (user) => {
-    user.id = users.value.length + 1;
+    user.id = Date.now(); 
     users.value.push(user);
   };
 
-  return { users, addUser };
+  const allUsers = computed(() => users.value);
+
+  return { users, serverUsers, fetchUsers, addUser, allUsers };
 });

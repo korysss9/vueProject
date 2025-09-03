@@ -5,23 +5,23 @@ const routes = [
   {
     path: "/user-table",
     name: "Table",
-    component: () => import("../components/UserTable.vue")
+    component: () => import("../pages/UserTablePage.vue"),
   },
   {
     path: "/itd",
     name: "Itd",
-    component: () => import("../components/Itd.vue")
+    component: () => import("../components/Itd.vue"),
   },
   {
     path: "/user-detail/:id",
     name: "UserDetail",
-    component: () => import("../components/UserDetail.vue")
+    component: () => import("../pages/UserDetailPage.vue"),
   },
 
   {
     path: "/add-user",
     name: "UserForm",
-    component: () => import("../components/UserForm.vue")
+    component: () => import("../pages/AddUserFormPage.vue"),
   },
 ];
 

@@ -80,7 +80,7 @@ const toggleMenu = () => {
         <ul class="flex flex-col space-y-2">
           <li>
             <router-link
-              to="/table"
+              to="/user-table"
               class="block py-2 px-3 text-gray-900 rounded-sm dark:text-white"
               active-class="text-blue-700 dark:text-blue-500"
               exact-active-class="text-blue-700 dark:text-blue-500"
